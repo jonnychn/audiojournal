@@ -46,7 +46,7 @@
             // Extract text between Open Sesame and Close Sesame
             const segments = [];
             let match;
-            const betweenSesameRegex = /open Sesame(.*?)close Sesame/gi;
+            const betweenSesameRegex = /open Sesame(.*?)close Sesame/gis;
             while ((match = betweenSesameRegex.exec(inputText)) !== null) {
                 segments.push(match[1].trim());
             }
