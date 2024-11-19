@@ -115,10 +115,10 @@
                 segments.push(match[1].trim());
             }
 
-            // Prepare CSV content
+            // Prepare CSV content without commas separating text into columns
             let csvContent = "data:text/csv;charset=utf-8,";
             segments.forEach((segment) => {
-                csvContent += `${segment}\n`;
+                csvContent += `"${segment.replace(/"/g, '""')}"\n`;
             });
 
             // Create a download link and click it
