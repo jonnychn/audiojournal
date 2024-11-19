@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesame Counter App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #textInput {
+            width: 100%;
+            height: 150px;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sesame Counter App</h1>
+    <textarea id="textInput" placeholder="Paste your text here..."></textarea>
+    <br><br>
+    <button onclick="countSesame()">Count and Highlight Sesame</button>
+    <br><br>
+    <div id="output"></div>
+
+    <script>
+        function countSesame() {
+            const inputText = document.getElementById('textInput').value;
+            const outputDiv = document.getElementById('output');
+            const openSesameRegex = /open Sesame/gi;
+            const closeSesameRegex = /close Sesame/gi;
+
+            // Count occurrences
+            const openSesameCount = (inputText.match(openSesameRegex) || []).length;
+            const closeSesameCount = (inputText.match(closeSesameRegex) || []).length;
+
+            // Replace occurrences with highlighted spans
+            let highlightedText = inputText
+                .replace(openSesameRegex, '<span class="highlight">$&</span>')
+                .replace(closeSesameRegex, '<span class="highlight">$&</span>');
+
+            // Update output with the results
+            outputDiv.innerHTML = `
+                <p><strong>Open Sesame Count:</strong> ${openSesameCount}</p>
+                <p><strong>Close Sesame Count:</strong> ${closeSesameCount}</p>
+                <p><strong>Highlighted Text:</strong></p>
+                <p>${highlightedText}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
