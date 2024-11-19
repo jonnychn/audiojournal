@@ -8,14 +8,32 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            line-height: 1.6;
         }
         #textInput {
             width: 100%;
             height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
         .highlight {
             background-color: yellow;
             font-weight: bold;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -53,12 +71,19 @@
 
             // Update output with the results
             outputDiv.innerHTML = `
-                <p><strong>Open Sesame Count:</strong> ${openSesameCount}</p>
-                <p><strong>Close Sesame Count:</strong> ${closeSesameCount}</p>
-                <p><strong>Highlighted Text:</strong></p>
-                <p>${highlightedText}</p>
-                <p><strong>Extracted Text Between Open and Close Sesame:</strong></p>
-                ${segments.map(segment => `<p>${segment}</p>`).join('')}
+                <div class="section">
+                    <div class="section-title">Sesame Count</div>
+                    <p><strong>Open Sesame Count:</strong> ${openSesameCount}</p>
+                    <p><strong>Close Sesame Count:</strong> ${closeSesameCount}</p>
+                </div>
+                <div class="section">
+                    <div class="section-title">Extracted Text Between Open and Close Sesame</div>
+                    ${segments.map(segment => `<p>${segment}</p>`).join('')}
+                </div>
+                <div class="section">
+                    <div class="section-title">Highlighted Text</div>
+                    <p>${highlightedText}</p>
+                </div>
             `;
         }
     </script>
