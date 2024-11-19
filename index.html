@@ -9,39 +9,57 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             line-height: 1.6;
+            background-color: #f0f8ff;
         }
         #textInput {
             width: 100%;
             height: 150px;
             padding: 10px;
             font-size: 16px;
-            border: 1px solid #ccc;
+            border: 2px solid #8a2be2;
+            border-radius: 8px;
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
             border-radius: 5px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            background-color: #45a049;
         }
         .highlight {
-            background-color: yellow;
+            background-color: #ffeb3b;
             font-weight: bold;
         }
         .section {
             margin-bottom: 20px;
             padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            border: 2px solid #8a2be2;
+            border-radius: 8px;
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+            background-color: #f9f9f9;
         }
         .section-title {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
+            color: #8a2be2;
             margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Sesame Counter App</h1>
+    <h1 style="color: #8a2be2;">Sesame Counter App</h1>
     <textarea id="textInput" placeholder="Paste your text here..."></textarea>
     <br><br>
     <button onclick="countSesame()">Count and Highlight Sesame</button>
+    <button onclick="exportCSV()">Export Extracted Text to CSV</button>
     <br><br>
     <div id="output"></div>
 
@@ -85,6 +103,32 @@
                     <p>${highlightedText}</p>
                 </div>
             `;
+        }
+
+        function exportCSV() {
+            const inputText = document.getElementById('textInput').value;
+            const betweenSesameRegex = /open Sesame(.*?)close Sesame/gis;
+            let match;
+            const segments = [];
+
+            while ((match = betweenSesameRegex.exec(inputText)) !== null) {
+                segments.push(match[1].trim());
+            }
+
+            // Prepare CSV content
+            let csvContent = "data:text/csv;charset=utf-8,";
+            segments.forEach((segment) => {
+                csvContent += `${segment}\n`;
+            });
+
+            // Create a download link and click it
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "extracted_text.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
