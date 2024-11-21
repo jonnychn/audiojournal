@@ -67,8 +67,8 @@
         function countSesame() {
             const inputText = document.getElementById('textInput').value;
             const outputDiv = document.getElementById('output');
-            const openSesameRegex = /open Sesame/gi;
-            const closeSesameRegex = /close Sesame/gi;
+            const openSesameRegex = /open\s*,?\s*sesame/gi;
+            const closeSesameRegex = /close\s*,?\s*sesame/gi;
 
             // Count occurrences
             const openSesameCount = (inputText.match(openSesameRegex) || []).length;
@@ -82,7 +82,7 @@
             // Extract text between Open Sesame and Close Sesame
             const segments = [];
             let match;
-            const betweenSesameRegex = /open Sesame(.*?)close Sesame/gis;
+            const betweenSesameRegex = /open\s*,?\s*sesame(.*?)close\s*,?\s*sesame/gis;
             while ((match = betweenSesameRegex.exec(inputText)) !== null) {
                 segments.push(match[1].trim());
             }
@@ -109,7 +109,7 @@
             const inputText = document.getElementById('textInput').value;
             const segments = [];
             let match;
-            const betweenSesameRegex = /open Sesame(.*?)close Sesame/gis;
+            const betweenSesameRegex = /open\s*,?\s*sesame(.*?)close\s*,?\s*sesame/gis;
 
             while ((match = betweenSesameRegex.exec(inputText)) !== null) {
                 segments.push(match[1].trim());
