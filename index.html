@@ -74,7 +74,7 @@
             const openSesameCount = (inputText.match(openSesameRegex) || []).length;
             const closeSesameCount = (inputText.match(closeSesameRegex) || []).length;
 
-            // Replace occurrences with highlighted spans
+            // Replace occurrences with highlighted spans, including variations
             let highlightedText = inputText
                 .replace(openSesameRegex, '<span class="highlight">$&</span>')
                 .replace(closeSesameRegex, '<span class="highlight">$&</span>');
