@@ -52,6 +52,22 @@
             color: #8a2be2;
             margin-bottom: 10px;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #8a2be2;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #8a2be2;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -79,57 +95,11 @@
                 .replace(openSesameRegex, '<span class="highlight">$&</span>')
                 .replace(closeSesameRegex, '<span class="highlight">$&</span>');
 
-            // Extract text between Open Sesame and Close Sesame
+            // Extract text between Open Sesame and Close Sesame, and extract topics
             const segments = [];
             let match;
-            const betweenSesameRegex = /open\s*,?\s*sesame(.*?)close\s*,?\s*sesame/gis;
+            const betweenSesameRegex = /open\s*,?\s*sesame(.*?)(?:-|–|—)\s*(.*?)(?=close\s*,?\s*sesame)/gis;
             while ((match = betweenSesameRegex.exec(inputText)) !== null) {
-                segments.push(match[1].trim());
-            }
-
-            // Update output with the results
-            outputDiv.innerHTML = `
-                <div class="section">
-                    <div class="section-title">Sesame Count</div>
-                    <p><strong>Open Sesame Count:</strong> ${openSesameCount}</p>
-                    <p><strong>Close Sesame Count:</strong> ${closeSesameCount}</p>
-                </div>
-                <div class="section">
-                    <div class="section-title">Extracted Text Between Open and Close Sesame</div>
-                    ${segments.map(segment => `<p>${segment}</p>`).join('')}
-                </div>
-                <div class="section">
-                    <div class="section-title">Highlighted Text</div>
-                    <p>${highlightedText}</p>
-                </div>
-            `;
-        }
-
-        function exportCSV() {
-            const inputText = document.getElementById('textInput').value;
-            const segments = [];
-            let match;
-            const betweenSesameRegex = /open\s*,?\s*sesame(.*?)close\s*,?\s*sesame/gis;
-
-            while ((match = betweenSesameRegex.exec(inputText)) !== null) {
-                segments.push(match[1].trim());
-            }
-
-            // Prepare CSV content without commas separating text into columns
-            let csvContent = "data:text/csv;charset=utf-8,";
-            segments.forEach((segment) => {
-                csvContent += `"${segment.replace(/"/g, '""')}"\n`;
-            });
-
-            // Create a download link and click it
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "extracted_text.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    </script>
-</body>
-</html>
+                const topicMatch = match[1].trim().split(/-|–|—/);
+                const topic = topicMatch[0].trim();
+                const content = match
